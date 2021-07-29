@@ -1,11 +1,8 @@
 const { gql } = require("apollo-server-express");
 const userSchema = require("../components/users/user.schema");
-const {
-  authTypeDefs,
-  authResolvers,
-} = require("../components/auth/auth.schema");
-
+const authSchema = require("../components/auth/auth.schema");
 const categorySchema = require("../components/categories/category.schema");
+const photoSchema = require("../components/photos/photo.schema");
 
 const typeDefs = gql`
   type Query {
@@ -29,13 +26,15 @@ module.exports = {
   typeDefs: [
     typeDefs,
     userSchema.userTypeDefs,
-    authTypeDefs,
+    authSchema.authTypeDefs,
     categorySchema.categoryTypeDefs,
+    photoSchema.photoTypeDefs,
   ],
   resolvers: [
     resolversBase,
     userSchema.userResolvers,
-    authResolvers,
+    authSchema.authResolvers,
     categorySchema.categoryResolvers,
+    photoSchema.photoResolvers,
   ],
 };

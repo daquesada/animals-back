@@ -24,9 +24,17 @@ const deleteOne = (schema, payload) => schema.deleteOne(payload);
 
 const findOne = (schema, payload) => schema.findOne(payload);
 
+const findOneAndUpdate = ({
+  schema,
+  payload,
+  update,
+  options = { new: true },
+}) => schema.findOneAndUpdate(payload, update, options);
+
 module.exports = {
   getAll,
   insertOne,
   deleteOne,
   findOne,
+  findOneAndUpdate,
 };
