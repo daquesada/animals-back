@@ -1,14 +1,7 @@
 const category = require("./category.model");
 const userModel = require("../users/user.model");
 const { v4: uuid } = require("uuid");
-
-async function checkIsUserLogged(context) {
-  const { email, id } = context;
-  if (!id) throw new Error("you must be logged in to perform this action");
-  const user = await userModel.findOne({ email });
-  if (!user) throw new Error("user does not exist");
-  return user;
-}
+const checkIsUserLogged = require("../../utils/userLogged");
 
 module.exports = (injectedDB) => {
   const getCategories = () =>
@@ -28,7 +21,7 @@ module.exports = (injectedDB) => {
       });
 
   const createCategory = async (_, { input }, context) => {
-    await checkIsUserLogged(context);
+    await checkIsUserLogged(context, userModel);
     input.id = uuid();
 
     return injectedDB
@@ -40,7 +33,7 @@ module.exports = (injectedDB) => {
   };
 
   const deleteCategory = async (_, { input }, context) => {
-    await checkIsUserLogged(context);
+    await checkIsUserLogged(context, userModel);
 
     return injectedDB
       .deleteOne(category, input)

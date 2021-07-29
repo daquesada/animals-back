@@ -17,7 +17,7 @@ const auth = jwtExpress({
   credentialsRequired: false,
 });
 
-app.use(errors);
 app.use(auth);
+app.use(errors);
 
 module.exports = app;
